@@ -45,16 +45,52 @@
             margin-bottom: 20px;
         }
 
-        /* Hero Header */
+        /* 
+           Hero Header: Updated for Watermark Effect
+           We create a transparent layer using a pseudo-element.
+        */
         header {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(251, 249, 246, 0.85), rgba(251, 249, 246, 0.85)), 
-                        url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200') no-repeat center center/cover;
+            /* New: Base background is simple, content is stacked above pseudo-element */
+            background-color: var(--bg-light);
             padding: 20px;
+            position: relative; /* Required for pseudo-element stacking */
+            overflow: hidden; /* Contains the background image */
+        }
+
+        /* 
+           New: This pseudo-element creates the transparent watermark
+           It holds the specific image and sets its opacity.
+        */
+        header::after {
+            content: "";
+            background: url('1000250976.jpg') no-repeat center center;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Sets the image behind the text */
+            
+            /* ADJUST OPACITY HERE: 0.15 is subtle, 0.5 is strong */
+            opacity: 0.15; 
+        }
+
+        /* 
+           This ensures the text in the header sits on top 
+           of the background watermark.
+        */
+        header .welcome-text,
+        header .names,
+        header .invitation-message,
+        header .date-line {
+            position: relative;
+            z-index: 2; /* Sits content above the pseudo-element */
         }
 
         .welcome-text {
@@ -377,7 +413,7 @@
     </section>
 
     <footer>
-        <p>Made with love • Surya & Kani Mozhi 2026</p>
+        <p>Made with love – Surya & Kani Mozhi 2026</p>
     </footer>
 
     <!-- COUNTDOWN TIMER SCRIPT -->
