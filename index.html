@@ -45,27 +45,20 @@
             margin-bottom: 20px;
         }
 
-        /* 
-           Hero Header: Updated for Watermark Effect
-           We create a transparent layer using a pseudo-element.
-        */
+        /* Hero Header: Set up for transparent pseudo-element watermark */
         header {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* New: Base background is simple, content is stacked above pseudo-element */
             background-color: var(--bg-light);
             padding: 20px;
-            position: relative; /* Required for pseudo-element stacking */
-            overflow: hidden; /* Contains the background image */
+            position: relative; 
+            overflow: hidden; 
         }
 
-        /* 
-           New: This pseudo-element creates the transparent watermark
-           It holds the specific image and sets its opacity.
-        */
+        /* Pseudo-element creates the transparent image watermark layer */
         header::after {
             content: "";
             background: url('1000250976.jpg') no-repeat center center;
@@ -75,22 +68,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; /* Sets the image behind the text */
-            
-            /* ADJUST OPACITY HERE: 0.15 is subtle, 0.5 is strong */
-            opacity: 0.15; 
+            z-index: 1; 
+            opacity: 0.15; /* Subtly sets background transparency */
         }
 
-        /* 
-           This ensures the text in the header sits on top 
-           of the background watermark.
-        */
+        /* Ensures text element layers sit safely above the watermark */
         header .welcome-text,
         header .names,
         header .invitation-message,
         header .date-line {
             position: relative;
-            z-index: 2; /* Sits content above the pseudo-element */
+            z-index: 2; 
         }
 
         .welcome-text {
@@ -154,7 +142,8 @@
             letter-spacing: 1px;
             color: #777;
         }
-/* Photoshoot Gallery Styling */
+
+        /* Photoshoot Gallery Styling */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -181,6 +170,7 @@
         .gallery-item img:hover {
             transform: scale(1.03);
         }
+
         /* Details / Venue */
         .details-grid {
             display: grid;
@@ -211,6 +201,15 @@
 
         .detail-card p {
             margin-bottom: 8px;
+        }
+
+        /* Responsive Map Style Adjustment */
+        .map-iframe {
+            width: 100%;
+            height: 250px;
+            border: none;
+            border-radius: 6px;
+            margin-top: 20px;
         }
 
         /* RSVP Form */
@@ -268,17 +267,74 @@
             color: #777;
             border-top: 1px solid #eee;
         }
-.invitation-message {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    max-width: 600px;
-    margin: 20px auto;
-    line-height: 1.8;
-    color: #7d6352;
-/*Remove or keep text-shadow depending on your background photo*/
-    text-shadow: none;
-    font-style: italic;
-}
+
+        .invitation-message {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 20px auto;
+            line-height: 1.8;
+            color: #7d6352;
+            text-shadow: none;
+            font-style: italic;
+        }
+
+        /* ==========================================================================
+           MOBILE RESPONSIVE MEDIA QUERY
+           ========================================================================== */
+        @media (max-width: 768px) {
+            header {
+                height: auto;
+                padding: 60px 15px;
+                min-height: 100vh; /* Keeps layout proportional but allows text to expand safely */
+            }
+
+            .names {
+                font-size: 3.5rem; /* Prevents text wrap layout breaks on mobile screens */
+                margin-bottom: 15px;
+            }
+
+            .welcome-text {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+
+            .invitation-message {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin: 15px auto;
+            }
+
+            .date-line {
+                font-size: 1.4rem;
+                padding: 8px 20px;
+            }
+
+            section {
+                padding: 40px 15px; /* Optimizes padding for narrower modern viewports */
+            }
+
+            .countdown-container {
+                margin-top: -20px;
+                padding: 20px 15px;
+            }
+
+            .timer {
+                gap: 10px;
+            }
+
+            .time-block {
+                min-width: 60px;
+            }
+
+            .time-block span {
+                font-size: 1.6rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -288,7 +344,7 @@
         <p class="welcome-text">The Wedding Invitation of</p>
         <h1 class="names">Surya & Kani Mozhi</h1>
         
-        <!-- Your New Invitation Message -->
+        <!-- Invitation Message -->
         <p class="invitation-message">
             With hearts brimming with joy, Surya and Kani Mozhi invite you to celebrate their union in a beautiful traditional wedding ceremony, followed by a warm reception filled with blessings and togetherness. Join us on Sunday, August 23, 2026, as family and friends gather to honor love, heritage, and new beginnings. Your presence will make this cherished day even more memorable. We look forward to celebrating with you at Ahsmi Imperial, Kozhinjampara, Palakkad.
         </p>
@@ -309,7 +365,7 @@
         </div>
     </section>
 
-<!-- PHOTOSHOOT GALLERY SECTION -->
+    <!-- PHOTOSHOOT GALLERY SECTION -->
     <section id="gallery">
         <h2>Our Moments</h2>
         <p style="font-style: italic; color: #666;">Glimpses of our journey together</p>
@@ -324,13 +380,13 @@
             <div class="gallery-item">
                 <img src="photo3.jpg" alt="Surya and Kani Mozhi Pre-Wedding Shot 3">
             </div>
-           <!-- New Cricket Image Added Here -->
-           <div class="gallery-item">
-                  <img src="photo4.jpg" alt="Surya and Kani Mozhi Pre-Wedding Shot4">
+            <div class="gallery-item">
+                <img src="photo4.jpg" alt="Surya and Kani Mozhi Pre-Wedding Shot 4">
+            </div>
         </div>
-      </div>
     </section>
-<!-- DETAILS SECTION WITH LIVE MAPS -->
+
+    <!-- DETAILS SECTION WITH LIVE MAPS -->
     <section id="details">
         <h2>Celebration Details</h2>
         <div class="details-grid">
@@ -343,7 +399,7 @@
                     <p><strong>Time:</strong> 9:30 AM to 10:30 AM</p>
                     <p><strong>Venue:</strong> Ahsmi Imperial,<br>Opposite State Ware House,<br>Palakkad-Pollachi Road, Kozhinjampara,<br>Palakkad - 678555, Kerala.</p>
                 </div>
-                <!-- Exact Google Map for Ahsmi Imperial -->
+                <!-- Google Map for Ahsmi Imperial -->
                 <iframe class="map-iframe" 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.8753238125673!2d76.8278949!3d10.7439851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8412e044da511%3A0x9b0a5e83b69a6405!2sAhsmi%20Imperial!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin" 
                         allowfullscreen="" 
@@ -359,7 +415,7 @@
                     <p><strong>Time:</strong> 6:00 PM to 10:00 PM</p>
                     <p><strong>Venue:</strong> Virugambakkam Community Hall,<br>170, Kamarajar Salai, Bhaskar Colony,<br>Virugambakkam, Chennai - 600092, Tamil Nadu.</p>
                 </div>
-                <!-- Exact Google Map for Virugambakkam Community Hall -->
+                <!-- Google Map for Virugambakkam Community Hall -->
                 <iframe class="map-iframe" 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.6577826350757!2d80.1940405!3d13.0526095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5266c8e8605947%3A0xcda49a988432609c!2sCommunity%20Hall%2CVirugambakkam!5e0!3m2!1sen!2sin!4v1710000000000!5m2!1sen!2sin" 
                         allowfullscreen="" 
@@ -375,7 +431,6 @@
         <h2>Kindly RSVP</h2>
         <p style="margin-bottom: 30px;">Please let us know if you can make it to our celebrations.</p>
         
-        <!-- Netlify Forms handle submission automatically via data-netlify="true" -->
         <form name="wedding-rsvp" method="POST" data-netlify="true">
             <div class="form-group">
                 <label for="name">Your Full Name</label>
