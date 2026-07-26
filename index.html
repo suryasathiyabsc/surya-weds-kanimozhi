@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surya & Kani Mozhi Wedding Invitation</title>
     
-    <!-- Elegant Fonts: Cinzel, Great Vibes, Montserrat -->
+    <!-- Custom Fonts: Cinzel, Great Vibes, Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --bg-dark: #121212;             /* Deep matte black background */
             --card-bg: #1c1c1e;             /* Dark grey card container */
-            --card-inner: #242426;           /* Inner badge background */
-            --accent-gold: #d4af37;          /* Champagne gold accent */
+            --card-inner: #242426;          /* Inner badge background */
+            --accent-gold: #d4af37;         /* Champagne gold accent */
             --text-white: #f5f5f7;           /* Off-white primary text */
-            --text-muted: #a1a1a6;           /* Muted secondary text */
+            --text-muted: #a1a1a6;          /* Muted secondary text */
             --border-color: rgba(255, 255, 255, 0.08);
         }
 
@@ -37,8 +37,98 @@
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             text-align: center;
+            overflow-x: hidden;
         }
 
+        /* ---------------- ENVELOPE OVERLAY ---------------- */
+        .envelope-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #1a1716;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+        }
+
+        .envelope-container.opened {
+            opacity: 0;
+            transform: translateY(-100%);
+            pointer-events: none;
+        }
+
+        .envelope {
+            position: relative;
+            width: 320px;
+            height: 480px;
+            background-color: #5c3a21; /* Terracotta / Warm Brown tone */
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 20px 20px;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .tap-hint {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(212, 175, 55, 0.7);
+            position: absolute;
+            top: 60px;
+            animation: pulse 1.8s infinite;
+        }
+
+        .envelope-text {
+            color: var(--accent-gold);
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            margin-top: 100px;
+            line-height: 1.6;
+        }
+
+        /* Wax Seal Style */
+        .wax-seal {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #d4af37, #aa820a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1716;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.4);
+            border: 2px solid #8c6a08;
+            position: absolute;
+            top: 140px;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope:hover .wax-seal {
+            transform: scale(1.08);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-4px); }
+        }
+
+        /* ---------------- MAIN WEBSITE STYLING ---------------- */
         section {
             padding: 60px 20px;
             max-width: 850px;
@@ -251,7 +341,7 @@
             color: var(--text-muted);
         }
 
-        /* Clean Gallery Grid Layout */
+        /* Gallery Grid Layout */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -311,7 +401,7 @@
             margin: 5px 0 15px 0;
         }
 
-        /* Interactive Tap to Display Time Pill */
+        /* Time Pill */
         .time-pill {
             background-color: rgba(212, 175, 55, 0.15);
             border: 1px solid var(--accent-gold);
@@ -343,7 +433,7 @@
             stroke-width: 2;
         }
 
-        /* Add to Calendar Pill Button */
+        /* Add to Calendar Button */
         .btn-calendar {
             background-color: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
@@ -378,7 +468,7 @@
             color: var(--text-white);
         }
 
-        /* Interactive Slide to Open Venue Container */
+        /* Slide to Open Venue Container */
         .slide-container {
             margin-top: 15px;
             background-color: var(--card-inner);
@@ -513,6 +603,18 @@
 </head>
 <body id="top">
 
+    <!-- ENVELOPE OVERLAY -->
+    <div class="envelope-container" id="envelopeOverlay">
+        <div class="envelope" onclick="openEnvelope()">
+            <div class="tap-hint">Tap Seal to Open</div>
+            <div class="wax-seal">S & K</div>
+            <div class="envelope-text">
+                Surya & Kani Mozhi<br>
+                <strong>INVITATION</strong>
+            </div>
+        </div>
+    </div>
+
     <!-- QUICK FLOATING NAVIGATION BAR -->
     <nav class="quick-nav">
         <a href="#gallery">Moments</a>
@@ -524,7 +626,6 @@
     <div class="music-player-btn" id="musicBtn" onclick="toggleMusic()">
         <span id="musicIcon">🎵</span>
     </div>
-    <!-- Replace 'music.mp3' with your audio file name inside the same project folder -->
     <audio id="weddingAudio" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
@@ -721,6 +822,24 @@
 
     <!-- INTERACTIVE SCRIPTS -->
     <script>
+        // 0. ENVELOPE OPEN & AUTO-MUSIC TRIGGER
+        function openEnvelope() {
+            const envelope = document.getElementById('envelopeOverlay');
+            envelope.classList.add('opened');
+            
+            // Automatically play background music on user interaction
+            const audio = document.getElementById('weddingAudio');
+            const btn = document.getElementById('musicBtn');
+            const icon = document.getElementById('musicIcon');
+
+            audio.play().then(() => {
+                btn.classList.add('playing');
+                icon.innerText = '⏸️';
+            }).catch(error => {
+                console.log("Autoplay prevented or audio file missing:", error);
+            });
+        }
+
         // 1. COUNTDOWN TIMER SCRIPT
         const weddingDateTarget = new Date("Aug 23, 2026 09:30:00").getTime();
 
